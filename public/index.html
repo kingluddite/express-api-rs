@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>Home</title>
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <h1>The force app</h1>
+      <hr />
+      <a href="/find"><button class="btn btn-success">Find</button></a>
+      <a href="/add"><button class="btn btn-primary">Add</button></a>
+    </div>
+
+    <div class="container">
+      <div class="row" id="allCharacters">
+        <h4>All Characters</h4>
+      </div>
+    </div>
+
+    <script>
+      console.log("hello world");
+      const allCharacters = document.getElementById("allCharacters");
+      fetch("/api/characters")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          data.forEach((forceMaster) => {
+            allCharacters.insertAdjacentHTML(
+              "beforebegin",
+              `
+                        <div class="col-sm-12 col-md-6 mt-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <p>Name: ${forceMaster.name}.</p>
+                                        <p>Role: ${forceMaster.role}.</p>
+                                        <p>Force Points: ${forceMaster.forcePoints}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `
+            );
+          });
+        })
+        .catch((err) => console.log(err));
+    </script>
+  </body>
+</html>
